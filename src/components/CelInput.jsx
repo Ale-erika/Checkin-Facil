@@ -1,10 +1,11 @@
 import { useForm } from "react-hook-form";
+import { IMaskInput } from "react-imask";
 
-export default function TextInput({
+export default function CelInput({
   labelDescription = "Descrição do label:",
   inputValue = " ",
   onInputChange = null,
-  id = "id_do_input_text",
+  id = "id_do_input_cel",
   autoFocus = false,
 }) {
   function handleInputChange({ currentTarget }) {
@@ -27,12 +28,13 @@ export default function TextInput({
           {labelDescription}
         </label>
 
-        <input
+        <IMaskInput
           autoFocus={autoFocus}
           id={id}
           className="bg-white border-2 p-1"
           type="text"
           value={inputValue}
+          mask="(00)00000-0000"
           {...register("id", { required: true })}
           onChange={handleInputChange}
         />

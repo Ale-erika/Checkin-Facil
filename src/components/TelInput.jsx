@@ -1,10 +1,10 @@
 import { useForm } from "react-hook-form";
 
-export default function TextInput({
+export default function TelInput({
   labelDescription = "Descrição do label:",
   inputValue = " ",
   onInputChange = null,
-  id = "id_do_input_text",
+  id = "id_do_input_tel",
   autoFocus = false,
 }) {
   function handleInputChange({ currentTarget }) {
@@ -33,6 +33,9 @@ export default function TextInput({
           className="bg-white border-2 p-1"
           type="text"
           value={inputValue}
+          placeholder=" "
+          maxLength={13}
+          minLength={12}
           {...register("id", { required: true })}
           onChange={handleInputChange}
         />
