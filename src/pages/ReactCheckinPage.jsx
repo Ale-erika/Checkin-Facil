@@ -9,7 +9,6 @@ export default function ReactCheckinPage() {
       <main>
         <div className="container mx-auto p-4">
           <ReactFormPage />
-          {/* <h2>O conteúdo fica aqui.</h2> */}
         </div>
       </main>
     </div>

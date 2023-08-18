@@ -39,50 +39,50 @@ const ReactFormPage = () => {
   return (
     <div>
       <form className="w-full max-w-lg">
-        <div className="md:w-3/4 mb-1">
-          <label className="text-sm mb-1" htmlFor="nome">
-            Nome Completo
-          </label>
-        </div>
-        <div className="md:w-2/3 mb-1">
-          <input
-            className="bg-white border-2 p-1"
-            id="nome"
-            type="text"
-            placeholder="Seu nome"
-            {...register("nome", { required: true })}
-            onChange={handleInputChange}
-          />
-          {errors?.nome?.type === "required" && (
-            <p className="Error-message">Nome é obrigatório.</p>
-          )}
+        <div className="flex">
+          <div className="flex flex-col w-32 ml-3">
+            <label className="text-sm mb-1" htmlFor="nome">
+              Nome Completo
+            </label>
+            <input
+              className="bg-white border-2 p-1 w-96"
+              id="nome"
+              type="text"
+              placeholder="Seu nome"
+              {...register("nome", { required: true })}
+              onChange={handleInputChange}
+            />
+            {errors?.nome?.type === "required" && (
+              <p className="Error-message">Nome é obrigatório.</p>
+            )}
+          </div>
         </div>
 
-        <div className="md:w-1/3 mb-1 inline-flex">
-          <label className="text-sm mb-1" htmlFor="email">
-            Email
-          </label>
+        <div className="flex">
+          <div className="flex flex-col w-32 ml-3">
+            <label className="text-sm mb-1" htmlFor="email">
+              Email
+            </label>
+            <input
+              className="bg-white border-2 p-1 w-96"
+              id="inline-full-email"
+              type="text"
+              placeholder="Seu email"
+              {...register("email", { required: true })}
+              onChange={handleInputChange}
+            />
+            {errors?.email?.type === "required" && (
+              <p className="Error-message">Email é obrigatório.</p>
+            )}
+          </div>
         </div>
-        <div className="md:w-2/3 mb-1 inline-flex">
-          <input
-            className="bg-white border-2 p-1"
-            id="inline-full-email"
-            type="text"
-            placeholder="Seu email"
-            {...register("email", { required: true })}
-            onChange={handleInputChange}
-          />
-          {errors?.email?.type === "required" && (
-            <p className="Error-message">Email é obrigatório.</p>
-          )}
-        </div>
-        <div className="flex -mx-3 mb-1">
-          <div className="w-full md:w-1/2 px-3">
+        <div className="flex">
+          <div className="flex flex-col w-32 ml-3">
             <label className="text-sm mb-1" htmlFor="telefone">
               Telefone
             </label>
             <input
-              className="bg-white border-2 p-1"
+              className="bg-white border-2 p-1 w-30"
               id="grid-telefone"
               type="text"
               placeholder=" "
@@ -90,12 +90,12 @@ const ReactFormPage = () => {
               minLength={12}
             />
           </div>
-          <div class="w-full md:w-1/2 px-3">
-            <label class="text-sm mb-1" htmlFor="celular">
+          <div class="flex flex-col w-32 ml-3">
+            <label class="text-sm mb-1 ml-1" htmlFor="celular">
               Celular
             </label>
             <IMaskInput
-              className="bg-white border-2 p-1"
+              className="bg-white border-2 p-1 w-36 ml-1"
               id="grid-celular"
               type="text"
               placeholder=""
@@ -108,34 +108,47 @@ const ReactFormPage = () => {
             )}
           </div>
         </div>
-        <div className="md:w-1/3 mb-1">
-          <label className="text-sm mb-1" htmlFor="dtNasc">
-            Data de Nascimento
-          </label>
+        <div className="flex">
+          <div className="flex flex-col w-32 ml-3">
+            <label for="sexo">Sexo</label>
+            <select
+              className="bg-white border-2 p-1 pointer-events-auto w-30"
+              name="sexo"
+              id="sexo"
+            >
+              <option value="">--</option>
+              <option value="Feminino">F</option>
+              <option value="Masculino">M</option>
+            </select>
+          </div>
+          <div className="flex flex-col w-32 ml-3">
+            <label className="text-sm mb-1 w-40 ml-1" htmlFor="dtNasc">
+              Data de Nascimento
+            </label>
+
+            <input
+              className="bg-white border-2 p-1 w-36 ml-1"
+              id="inline-dt-nasc"
+              type="date"
+              placeholder=""
+            />
+          </div>
+
+          <div className="flex flex-col w-32 ml-9">
+            <label className="text-sm mb-1 ml-0" htmlFor="profissao">
+              Profissão
+            </label>
+            <input
+              className="bg-white border-2 p-1 w-44 ml-0"
+              id="inline-profissao"
+              type="text"
+              placeholder="Sua profissão"
+            />
+          </div>
         </div>
-        <div className="md:w-2/3 mb-1">
-          <input
-            className="bg-white border-2 p-1"
-            id="inline-dt-nasc"
-            type="date"
-            placeholder=""
-          />
-        </div>
-        <div className="md:w-1/3 mb-1">
-          <label className="text-sm mb-1" htmlFor="dtNasc">
-            Profissão
-          </label>
-        </div>
-        <div className="md:w-2/3 mb-1">
-          <input
-            className="bg-white border-2 p-1"
-            id="inline-profissao"
-            type="text"
-            placeholder="Sua profissão"
-          />
-        </div>
-        <div className="flex flex-wrap -mx-3 mb-1">
-          <div className="md:w-1/3">
+
+        <div className="flex">
+          <div className="flex flex-col w-32 ml-3">
             <label className="text-sm mb-1" htmlFor="pais">
               País
             </label>
@@ -146,13 +159,12 @@ const ReactFormPage = () => {
               placeholder=" "
             />
           </div>
-          <label className="text-sm mb-1" htmlFor="estado">
-            Estado
-          </label>
-          <div className="flex flex-wrap -mx-3 mb-2 my-9">
+          <div className="flex flex-col w-32 ml-3">
+            <label className="text-sm mb-1" htmlFor="estado">
+              Estado
+            </label>
             <select
-              className="bg-white border-2 p-1 pointer-events-auto"
-              //       className="bg-white appearance-none border-2 border-gray-200 rounded block w-full py-2 px-4 text-gray-700 w-full py-2 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+              className="bg-white border-2 p-1 pointer-events-auto w-36"
               id="grid-estado"
               value={selectedEstado}
               onChange={handleEstadoUpdate}
@@ -164,12 +176,12 @@ const ReactFormPage = () => {
               ))}
             </select>
           </div>
-          <label className="text-sm mb-1" htmlFor="cidade">
-            Cidade
-          </label>
-          <div className="flex flex-wrap -mx-3 mb-1 my-9">
+          <div className="flex flex-col flex-1 ml-3">
+            <label className="text-sm mb-1 ml-6" htmlFor="cidade">
+              Cidade
+            </label>
             <select
-              className="bg-white border-2 p-1 pointer-events-auto"
+              className="bg-white border-2 p-1 pointer-events-auto w-44 ml-6"
               id="grid-cidade"
             >
               {cidades.map((cidade) => (
@@ -178,8 +190,8 @@ const ReactFormPage = () => {
             </select>
           </div>
         </div>
-        <div className="flex flex-wrap -mx-3 mb-1">
-          <div className="md:w-1/3">
+        <div className="flex">
+          <div className="flex flex-col w-32 ml-3">
             <label className="text-sm mb-1" htmlFor="cpf">
               CPF
             </label>
@@ -189,19 +201,19 @@ const ReactFormPage = () => {
               type="text"
               placeholder=" "
               mask="000.000.000-00"
-              {...register("rg", { required: true })}
+              {...register("cpf", { required: true })}
               onChange={handleInputChange}
             />
             {errors?.cpf?.type === "required" && (
               <p className="Error-message">CPF é obrigatório.</p>
             )}
           </div>
-          <div class="w-full md:w-1/2 px-3">
+          <div class="flex flex-col flex-1 ml-3">
             <label class="text-sm mb-1" htmlFor="rg">
               RG
             </label>
             <input
-              className="bg-white border-2 p-1"
+              className="bg-white border-2 p-1 w-36"
               id="grid-rg"
               type="text"
               placeholder=""
@@ -212,12 +224,12 @@ const ReactFormPage = () => {
               <p className="Error-message">RG é obrigatório.</p>
             )}
           </div>
-          <div class="w-full md:w-1/2 px-3">
-            <label className="text-sm mb-1" htmlFor="orgaoexpedidor">
+          <div class="flex flex-col flex-1 ml-3">
+            <label class="text-sm mb-1 ml-1" htmlFor="orgaoexpedidor">
               Órgão expedidor
             </label>
             <input
-              className="bg-white border-2 p-1"
+              className="bg-white border-2 p-1 w-44 ml-1"
               id="grid-orgaoexpedidor"
               type="text"
               placeholder=""
@@ -226,6 +238,86 @@ const ReactFormPage = () => {
             />
             {errors?.orgaoexpedidor?.type === "required" && (
               <p className="Error-message">Órgão expedidor é obrigatório.</p>
+            )}
+          </div>
+        </div>
+        <div className="flex">
+          <div className="flex flex-col w-32 ml-3">
+            <label className="text-sm mb-1" htmlFor="endereco">
+              Endereco
+            </label>
+            <input
+              className="bg-white border-2 p-1 w-96"
+              id="grid-endereco"
+              type="text"
+              placeholder=" "
+              {...register("endereco", { required: true })}
+              onChange={handleInputChange}
+            />
+            {errors?.endereco?.type === "required" && (
+              <p className="Error-message">Endereço é obrigatório.</p>
+            )}
+          </div>
+          <div class="flex flex-col flex-1 ml-72">
+            <label class="text-sm mb-1" htmlFor="nro">
+              Nro
+            </label>
+            <input
+              className="bg-white border-2 p-1 w-20"
+              id="grid-nro"
+              type="text"
+              placeholder=""
+              {...register("nro", { required: true })}
+              onChange={handleInputChange}
+            />
+            {errors?.nro?.type === "required" && (
+              <p className="Error-message">Número é obrigatório.</p>
+            )}
+          </div>
+        </div>
+        <div className="flex">
+          <div className="flex flex-col w-32 ml-3">
+            <label className="text-sm mb-1" htmlFor="complemento">
+              Complemento
+            </label>
+            <input
+              className="bg-white border-2 p-1 w-96"
+              id="grid-complemento"
+              type="text"
+              placeholder=" "
+              onChange={handleInputChange}
+            />
+          </div>
+          <div class="flex flex-col flex-1 ml-72">
+            <label class="text-sm mb-1" htmlFor="bairro">
+              Bairro
+            </label>
+            <input
+              className="bg-white border-2 p-1 w-40 ml-0"
+              id="grid-bairro"
+              type="text"
+              placeholder=""
+              {...register("bairro", { required: true })}
+              onChange={handleInputChange}
+            />
+            {errors?.bairro?.type === "required" && (
+              <p className="Error-message">Bairro é obrigatório.</p>
+            )}
+          </div>
+          <div class="flex flex-col flex-1 ml-3">
+            <label class="text-sm mb-1" htmlFor="cep">
+              CEP
+            </label>
+            <input
+              className="bg-white border-2 p-1 w-40 ml-0"
+              id="grid-cep"
+              type="text"
+              placeholder=""
+              {...register("cep", { required: true })}
+              onChange={handleInputChange}
+            />
+            {errors?.cep?.type === "required" && (
+              <p className="Error-message">CEP é obrigatório.</p>
             )}
           </div>
         </div>
