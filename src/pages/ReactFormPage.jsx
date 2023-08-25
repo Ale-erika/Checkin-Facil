@@ -4,6 +4,9 @@ import { useForm } from "react-hook-form";
 import { IMaskInput } from "react-imask";
 import { useEstados } from "../hooks/useEstados";
 import { useCidades } from "../hooks/useCidades";
+import { profissoes } from "../data/profissoes";
+import { usePaises } from "../hooks/usePaises";
+
 import axios from "axios";
 
 const ReactFormPage = () => {
@@ -30,13 +33,34 @@ const ReactFormPage = () => {
     setSelectedEstado(event.target.value);
   };
 
+  const [selectedProfissao, setSelectedProfissao] = useState("");
+  const handleProfissaoUpdate = (event) => {
+    setSelectedProfissao(event.target.value);
+  };
+
+  const { paises } = usePaises();
+  const [selectedPais, setSelectedPais] = useState("");
+  const handlePaisUpdate = (event) => {
+    setSelectedPais(event.target.value);
+  };
+
+  const listaPaisesA = paises.map((item) => {
+    return item.nome.abreviado;
+  });
+
+  let listaPaisesB = listaPaisesA.filter((valor, indice, self) => {
+    return self.indexOf(valor) === indice;
+  });
+
+  listaPaisesB.sort();
+
   const [message, setMessage] = useState("");
 
   const handleButtonClick = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData);
-    console.log("***handle submit", data);
+    console.log("***handle-submit", data);
     const headers = {
       headers: {
         // indica que será enviado dados em formato objeto
@@ -44,11 +68,14 @@ const ReactFormPage = () => {
       },
     };
 
+    var form = document.querySelector("form");
+
     await axios
       .post("http://localhost:8080/checkin", data, headers)
       .then((response) => {
         console.log(response);
         setMessage(response.data.message);
+        form.reset();
       })
       .catch((err) => {
         setMessage(err.response.data.message);
@@ -73,11 +100,12 @@ const ReactFormPage = () => {
               id="nome"
               type="text"
               placeholder="Seu nome"
+              required
               {...register("nome", { required: true })}
               onChange={handleInputChange}
             />
             {errors?.nome?.type === "required" && (
-              <p className="Error-message">Nome é obrigatório.</p>
+              <p className="error-message">Nome é obrigatório.</p>
             )}
           </div>
         </div>
@@ -92,6 +120,7 @@ const ReactFormPage = () => {
               id="email"
               type="text"
               placeholder="Seu email"
+              required
               {...register("email", { required: true })}
               onChange={handleInputChange}
             />
@@ -123,6 +152,7 @@ const ReactFormPage = () => {
               id="celular"
               type="text"
               placeholder=""
+              required
               mask="(00)00000-0000"
               {...register("celular", { required: true })}
               onChange={handleInputChange}
@@ -137,24 +167,31 @@ const ReactFormPage = () => {
             <label className="text-sm mb-1 mt-4" htmlFor="profissao">
               Profissão
             </label>
-            <input
-              className="bg-white border-2 p-1 w-44 ml-0"
+            <select
+              className="bg-white border-2 p-1 pointer-events-auto w-44 ml-0"
               id="profissao"
-              type="text"
-              placeholder="Sua profissão"
-            />
+              value={selectedProfissao}
+              onChange={handleProfissaoUpdate}
+            >
+              {profissoes.map((profissao) => (
+                <option>{profissao}</option>
+              ))}
+            </select>
           </div>
           <div className="flex flex-col w-32 ml-3">
             <label className="text-sm mb-1 ml-14 mt-4" htmlFor="nacionalidade">
               Nacionalidade
             </label>
-
-            <input
-              className="bg-white border-2 p-1 w-48 ml-14"
+            <select
+              className="bg-white border-2 p-1 pointer-events-auto w-48 ml-14"
               id="nacionalidade"
-              type="text"
-              placeholder=""
-            />
+              value={selectedPais}
+              onChange={handlePaisUpdate}
+            >
+              {listaPaisesB.map((pais) => (
+                <option>{pais}</option>
+              ))}
+            </select>
           </div>
         </div>
         <div className="flex">
@@ -164,11 +201,11 @@ const ReactFormPage = () => {
             </label>
 
             <input
-              /*  className="bg-white border-2 p-1 w-44 ml-1" */
               id="dt-nasc"
               class={errors?.dtnasc && "input-error"}
               type="date"
               placeholder=""
+              required
               {...register("dtnasc", { required: true })}
               onChange={handleInputChange}
             />
@@ -202,6 +239,7 @@ const ReactFormPage = () => {
               id="cpf"
               type="text"
               placeholder=" "
+              required
               mask="000.000.000-00"
               {...register("cpf", { required: true })}
               onChange={handleInputChange}
@@ -219,6 +257,7 @@ const ReactFormPage = () => {
               id="rg"
               type="text"
               placeholder=""
+              required
               {...register("rg", { required: true })}
               onChange={handleInputChange}
             />
@@ -238,6 +277,7 @@ const ReactFormPage = () => {
               id="orgaoexpedidor"
               type="text"
               placeholder=""
+              required
               {...register("orgaoexpedidor", { required: true })}
               onChange={handleInputChange}
             />
@@ -257,6 +297,7 @@ const ReactFormPage = () => {
               id="endereco"
               type="text"
               placeholder=" "
+              required
               {...register("endereco", { required: true })}
               onChange={handleInputChange}
             />
@@ -273,6 +314,7 @@ const ReactFormPage = () => {
               id="nro"
               type="text"
               placeholder=""
+              required
               {...register("nro", { required: true })}
               onChange={handleInputChange}
             />
@@ -303,6 +345,7 @@ const ReactFormPage = () => {
               id="bairro"
               type="text"
               placeholder=""
+              required
               {...register("bairro", { required: true })}
               onChange={handleInputChange}
             />
@@ -314,14 +357,25 @@ const ReactFormPage = () => {
             <label className="text-sm mb-1 mt-4" htmlFor="cep">
               CEP
             </label>
-            <input
+            <IMaskInput
               className="bg-white border-2 p-1 w-40 ml-0"
               id="cep"
               type="text"
               placeholder=""
+              required
+              mask="00.000-000"
               {...register("cep", { required: true })}
               onChange={handleInputChange}
             />
+            {/* <input
+              className="bg-white border-2 p-1 w-40 ml-0"
+              id="cep"
+              type="text"
+              placeholder=""
+              required
+              {...register("cep", { required: true })}
+              onChange={handleInputChange}
+            /> */}
             {errors?.cep?.type === "required" && (
               <p className="Error-message">CEP é obrigatório.</p>
             )}
@@ -337,6 +391,7 @@ const ReactFormPage = () => {
               id="pais"
               type="text"
               placeholder=" "
+              required
             />
           </div>
           <div className="flex flex-col w-32 ml-3">
@@ -380,6 +435,7 @@ const ReactFormPage = () => {
               id="procedencia"
               type="text"
               placeholder=" "
+              required
               onChange={handleInputChange}
               {...register("procedencia", { required: true })}
             />
@@ -396,6 +452,7 @@ const ReactFormPage = () => {
               id="destino"
               type="text"
               placeholder=""
+              required
               {...register("destino", { required: true })}
               onChange={handleInputChange}
             />
@@ -428,6 +485,7 @@ const ReactFormPage = () => {
               id="transporte"
               type="text"
               placeholder=""
+              required
               {...register("transporte", { required: true })}
               onChange={handleInputChange}
             />
